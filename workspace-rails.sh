@@ -2,7 +2,7 @@ echo "iniciando o preparo do ambiente..."
 
 # Atualizacao das dependencias
 sudo apt update && sudo apt upgrade -y
-sudo apt install curl gpg gcc g++ make zip plocate -y
+sudo apt install curl gpg gcc g++ make zip plocate jq -y
 
 # RVM e ruby
 curl -sSL https://rvm.io/mpapis.asc | gpg --import -
@@ -76,8 +76,8 @@ bundle config --global retry 10000
 sudo apt-get install -y postgresql libpq-dev
 
 # Node.js
-## Nota: Toda vez que for instalar o NVM verificar a versão aqui https://github.com/nvm-sh/nvm/releases
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+NVM_LATEST_VERSION=$(curl -s https://api.github.com/repos/nvm-sh/nvm/releases/latest | jq -r .tag_name)
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/${NVM_LATEST_VERSION}/install.sh | bash
 source ~/.bashrc
 source ~/.bash_profile
 nvm install --lts
